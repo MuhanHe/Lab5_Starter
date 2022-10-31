@@ -39,20 +39,19 @@ function init() {
   // play sound with selection
   // addEventListener('click', function () { playSound(selected)} );
   const jsConfetti = new JSConfetti();
+  const butn = document.querySelector("button");
   function playSound(selected,jsConfetti){
-    var el = document.getElementsByClassName("hidden");
+    var el = document.querySelector("audio");
     if (selected.value == "air-horn"){
       el.src = "assets/audio/air-horn.mp3";
-      console.log(el.src);
     }else if (selected.value == "car-horn"){
       el.src = "assets/audio/car-horn.mp3";
-      console.log(el.src);
     }else if (selected.value == "party-horn"){
       el.src = "assets/audio/party-horn.mp3";
       jsConfetti.addConfetti();
-      console.log("3");
     }
+    el.play();
   }
-  addEventListener('click', function () { playSound(selected,jsConfetti)} );
+  butn.addEventListener('click', function () { playSound(selected,jsConfetti)} );
   onclick = playSound(selected,jsConfetti);
 }
