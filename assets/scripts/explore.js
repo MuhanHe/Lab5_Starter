@@ -4,12 +4,11 @@ window.addEventListener('DOMContentLoaded', init);
 
 function init() {
   // select voices
-  function populateVoiceList() {
+  const voices = speechSynthesis.getVoices();
+  function populateVoiceList(voices) {
     if (typeof speechSynthesis === 'undefined') {
       return;
     }
-  
-    const voices = speechSynthesis.getVoices();
   
     for (let i = 0; i < voices.length; i++) {
       const option = document.createElement('option');
@@ -21,18 +20,28 @@ function init() {
     }
   }
   
-  populateVoiceList();
+  populateVoiceList(voices);
   if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = populateVoiceList;
   }
 
   // talk button
-  // const butn = document.querySelector("button");
-  // function talk(){
-  //   var selected = document.getElementById("voice-select");
-
-  // }
-  // butn.addEventListener('click', function () { talk(selected,jsConfetti)} );
-  // onclick = talk(selected,jsConfetti);
+  const butn = document.querySelector("button");
+  const selected = document.getElementById("voice-select");
+  var text = document.getElementById("text-to-speak");
+  const synth = window.speechSynthesis;
+  butn.addEventListener('click', function () { talk(selected,text,voices)} );
+  function talk(selected,text,voices){
+    const utterThis = new SpeechSynthesisUtterance(text.value);
+    var voiceSelect = selected.value.split(" ")[0]
+    for (let i = 0; i < voices.length ; i++) {
+      if (voices[i].name === voiceSelect) {
+        utterThis.voice = voices[i];
+      }
+    }
+    utterThis.volume = 0.5;
+    synth.speak(utterThis);
+  }
+  onclick = talk(selected,text,voices);
 
 }
