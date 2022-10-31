@@ -35,12 +35,17 @@ function init() {
     const utterThis = new SpeechSynthesisUtterance(text.value);
     var voiceSelect = selected.value.split(" ")[0]
     for (let i = 0; i < voices.length ; i++) {
+      if (voiceSelect == "select"){
+        continue;
+      }
       if (voices[i].name === voiceSelect) {
         utterThis.voice = voices[i];
       }
     }
-    utterThis.volume = 0.5;
-    synth.speak(utterThis);
+    if (voiceSelect != "select"){
+      utterThis.volume = 0.5;
+      synth.speak(utterThis);
+    }
   }
   onclick = talk(selected,text,voices);
 
