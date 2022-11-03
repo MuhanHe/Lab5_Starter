@@ -30,6 +30,7 @@ function init() {
   const selected = document.getElementById("voice-select");
   var text = document.getElementById("text-to-speak");
   const synth = window.speechSynthesis;
+  var image = document.querySelector("header+img");
   butn.addEventListener('click', function () { talk(selected,text,voices)} );
   function talk(selected,text,voices){
     const utterThis = new SpeechSynthesisUtterance(text.value);
@@ -43,10 +44,15 @@ function init() {
       }
     }
     if (voiceSelect != "select"){
+      image.src = "assets/images/smiling-open.png";
       utterThis.volume = 0.5;
       synth.speak(utterThis);
+      utterThis.addEventListener('end', function() {
+        image.src = "assets/images/smiling.png"
+      });
     }
-  }
+  };
   onclick = talk(selected,text,voices);
+
 
 }
